@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { ENTER_USER } from '../constantsAction';
 
@@ -24,22 +24,25 @@ export function Login ({users,autorization}) {
       setPassword('');
     }
   }
-
+  if (autorization) {
+    return <Redirect to='/'/>
+  }
   return (
     <div className='form'>
+      <h1>Autorization</h1>
       <label>
-        Name:<input value={name} type='text' name='name' onChange={(e) => {
+        Name: <input value={name} type='text' name='name' onChange={(e) => {
           setName(e.target.value);
           setError(false);
         }}/>
       </label>
       <label>
-        Password:<input value={password} type='text' name='password' onChange={(e) => {
+        Password: <input value={password} type='text' name='password' onChange={(e) => {
           setPassword(e.target.value);
           setError(false);
         }}/>
       </label>
-      <input type='button' value='Submit' name='check' onClick={(e)=>{
+      <input className='enter' type='button' value='Enter' name='check' onClick={(e)=>{
         if (e.target.name==='check') {
           checkData(name,password)
         }
